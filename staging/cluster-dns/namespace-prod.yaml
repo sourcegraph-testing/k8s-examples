@@ -1,6 +1,9 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: "production"
+  annotations:
+    my-key: my-value
   labels:
-    name: "production"
+    name: production
+  name: production
+  namespace: my-namespace

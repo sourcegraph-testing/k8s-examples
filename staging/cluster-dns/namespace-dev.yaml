@@ -1,6 +1,9 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: "development"
+  annotations:
+    my-key: my-value
   labels:
-    name: "development"
+    name: development
+  name: development
+  namespace: my-namespace

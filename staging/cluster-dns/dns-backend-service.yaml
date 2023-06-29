@@ -1,9 +1,12 @@
-kind: Service
 apiVersion: v1
+kind: Service
 metadata:
+  annotations:
+    my-key: my-value
   name: dns-backend
+  namespace: my-namespace
 spec:
   ports:
-    - port: 8000
+  - port: 8000
   selector:
     name: dns-backend

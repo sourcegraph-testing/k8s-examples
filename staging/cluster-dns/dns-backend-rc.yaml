@@ -1,9 +1,12 @@
 apiVersion: v1
 kind: ReplicationController
 metadata:
-  name: dns-backend
+  annotations:
+    my-key: my-value
   labels:
     name: dns-backend
+  name: dns-backend
+  namespace: my-namespace
 spec:
   replicas: 1
   selector:
@@ -14,8 +17,8 @@ spec:
         name: dns-backend
     spec:
       containers:
-        - name: dns-backend
-          image: registry.k8s.io/example-dns-backend:v1
-          ports:
-            - name: backend-port
-              containerPort: 8000
+      - image: registry.k8s.io/example-dns-backend:v1
+        name: dns-backend
+        ports:
+        - containerPort: 8000
+          name: backend-port
