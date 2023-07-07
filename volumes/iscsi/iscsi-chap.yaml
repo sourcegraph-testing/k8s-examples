@@ -1,24 +1,26 @@
----
 apiVersion: v1
 kind: Pod
 metadata:
+  annotations:
+    my-key: my-value
   name: iscsipd
+  namespace: my-namespace
 spec:
   containers:
-  - name: iscsipd-ro
-    image: kubernetes/pause
+  - image: kubernetes/pause
+    name: iscsipd-ro
     volumeMounts:
-    - mountPath: "/mnt/iscsipd"
+    - mountPath: /mnt/iscsipd
       name: iscsivol
   volumes:
-  - name: iscsivol
-    iscsi:
-      targetPortal: 127.0.0.1
-      iqn: iqn.2015-02.example.com:test
-      lun: 0
-      fsType: ext4
-      readOnly: true
+  - iscsi:
       chapAuthDiscovery: true
       chapAuthSession: true
+      fsType: ext4
+      iqn: iqn.2015-02.example.com:test
+      lun: 0
+      readOnly: true
       secretRef:
-         name: chap-secret
+        name: chap-secret
+      targetPortal: 127.0.0.1
+    name: iscsivol
