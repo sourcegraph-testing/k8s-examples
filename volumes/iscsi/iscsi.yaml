@@ -1,21 +1,25 @@
----
 apiVersion: v1
 kind: Pod
 metadata:
+  annotations:
+    my-key: my-value
   name: iscsipd
+  namespace: my-namespace
 spec:
   containers:
-  - name: iscsipd-rw
-    image: kubernetes/pause
+  - image: kubernetes/pause
+    name: iscsipd-rw
     volumeMounts:
-    - mountPath: "/mnt/iscsipd"
+    - mountPath: /mnt/iscsipd
       name: iscsipd-rw
   volumes:
-  - name: iscsipd-rw
-    iscsi:
-      targetPortal: 10.0.2.15:3260
-      portals: ['10.0.2.16:3260', '10.0.2.17:3260']
+  - iscsi:
+      fsType: ext4
       iqn: iqn.2001-04.com.example:storage.kube.sys1.xyz
       lun: 0
-      fsType: ext4
+      portals:
+      - 10.0.2.16:3260
+      - 10.0.2.17:3260
       readOnly: true
+      targetPortal: 10.0.2.15:3260
+    name: iscsipd-rw
